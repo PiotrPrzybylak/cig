@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import os
 
 counter = 0
 
@@ -41,9 +42,11 @@ def sklej_htmla(counter):
     return wygenerowany_htnl
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    print("Port is " + str(port))
     print("ccccccc")
     app.run(
         host='0.0.0.0',
-        port=8000,
+        port=port,
         debug=True,
     )
