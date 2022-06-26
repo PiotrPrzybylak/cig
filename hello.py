@@ -13,9 +13,9 @@ print("aaaa" + str(counter))
 
 @app.route("/")
 def hello_world():
-    print("bbbbbb")
-    result = execute_select("select now();")
-    return "<p>Hello, World!</p>" + str(result)
+    restaurants = execute_select("select name from restaurants")
+    return render_template("restaurants.html", restaurants=restaurants)
+
 
 @app.route("/test")
 def test():
@@ -47,6 +47,7 @@ def sklej_htmla(counter):
     print(wygenerowany_htnl)
     return wygenerowany_htnl
 
+
 def execute_select(statement, variables=None, fetchall=True):
     result_set = []
     with psycopg2.connect(connection_string) as conn:
@@ -65,5 +66,3 @@ if __name__ == '__main__':
         port=port,
         debug=True,
     )
-
-
