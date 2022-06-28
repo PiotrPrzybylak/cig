@@ -9,8 +9,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    restaurants = execute_select("select name from restaurants")
-    return render_template("restaurants.html", restaurants=restaurants)
+    restaurants = execute_select("select * from restaurants")
+    rankings = execute_select("select * from rankings")
+    for ranking in rankings:
+        ranking_restaurants = []
+        ids = ranking['restaurants_ids'].split(",")
+        for id in ids:
+            for restaurant in restaurants:
+                if restaurant['id'] == int(id):
+                    ranking_restaurants.append(restaurant)
+                    break
+        ranking['restaurants'] = ranking_restaurants
+    return render_template("restaurants.html", restaurants=restaurants, rankings=rankings)
 
 
 def execute_select(statement, variables=None, fetchall=True):
@@ -25,7 +35,6 @@ def execute_select(statement, variables=None, fetchall=True):
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     print("Port is " + str(port))
-    print("ccccccc")
     app.run(
         host='0.0.0.0',
         port=port,

@@ -5,3 +5,10 @@ create table if not exists restaurants
             primary key,
     name text
 );
+
+create table if not exists rankings
+(
+    id              serial,
+    name            text,
+    restaurants_ids text
+);
