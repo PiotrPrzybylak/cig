@@ -12,7 +12,7 @@
     <h3>{{ ranking['name'] }}</h3>
     <ol>
         {% for restaurant in ranking.restaurants %}
-            <li>{{ restaurant['name'] }}</li>
+            <li>[{{ restaurant['place'] }}] - {{ restaurant['name'] }}</li>
         {% endfor %}
     </ol>
 

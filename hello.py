@@ -14,10 +14,12 @@ def hello_world():
     for ranking in rankings:
         ranking_restaurants = []
         ids = ranking['restaurants_ids'].split(",")
-        for id in ids:
+        for i in range(len(ids)):
             for restaurant in restaurants:
-                if restaurant['id'] == int(id):
-                    ranking_restaurants.append(restaurant)
+                if restaurant['id'] == int(ids[i]):
+                    restaurant_ranking = restaurant.copy()
+                    restaurant_ranking['place'] = "{:.3f}".format((i) / (len(ids) - 1))
+                    ranking_restaurants.append(restaurant_ranking)
                     break
         ranking['restaurants'] = ranking_restaurants
     return render_template("restaurants.html", restaurants=restaurants, rankings=rankings)
