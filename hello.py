@@ -17,11 +17,23 @@ def hello_world():
         for i in range(len(ids)):
             for restaurant in restaurants:
                 if restaurant['id'] == int(ids[i]):
+                    if 'ratings' not in restaurant:
+                        restaurant['ratings'] = []
                     restaurant_ranking = restaurant.copy()
-                    restaurant_ranking['place'] = "{:.3f}".format((i) / (len(ids) - 1))
+                    rating = 1 - (i) / (len(ids) - 1)
+                    restaurant_ranking['place'] = "{:.3f}".format(rating)
                     ranking_restaurants.append(restaurant_ranking)
+                    restaurant['ratings'].append(rating)
                     break
         ranking['restaurants'] = ranking_restaurants
+    for restaurant in restaurants:
+        if 'ratings' in restaurant:
+            restaurant['average'] = "{:.3f}".format(sum(restaurant['ratings']) / len(restaurant['ratings']))
+            restaurant['votes'] = len(restaurant['ratings'])
+        else:
+            restaurant['average'] = "--"
+            restaurant['votes'] = 0
+    restaurants.sort(key= lambda x: x['average'], reverse=True)
     return render_template("restaurants.html", restaurants=restaurants, rankings=rankings)
 
 

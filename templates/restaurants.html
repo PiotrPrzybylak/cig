@@ -23,7 +23,7 @@
 
 <ul>
     {% for restaurant in restaurants %}
-        <li>{{ restaurant['name'] }}</li>
+        <li>[{{ restaurant['average'] }}] ({{restaurant['votes']}}) {{ restaurant['name'] }}</li>
     {% endfor %}
 
 </ul>
