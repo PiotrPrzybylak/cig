@@ -9,18 +9,25 @@
             integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
             crossorigin="anonymous" defer></script>
     <title>Centrum Informacji Gastronomicznej</title>
+    <style>
+        {#body {#}
+        {#    padding: 10px;#}
+        {#}#}
+    </style>
 </head>
 <body>
+<div class="container">
 <h1>Centrum Informacji Gastronomicznej</h1>
 <h2>Rankingi</h2>
 
 {% for ranking in rankings %}
     <h3>{{ ranking['name'] }}</h3>
-    <ol>
+    <table class="table">
+        <tr><th>Miejsce</th><th>Nazwa</th><th>Punktacja</th></tr>
         {% for restaurant in ranking.restaurants %}
-            <li>[{{ restaurant['place'] }}] - {{ restaurant['name'] }}</li>
+            <tr><td>{{loop.index}}</td><th>{{ restaurant['name'] }}</th><td>{{ restaurant['place'] }}</td></tr>
         {% endfor %}
-    </ol>
+    </table>
 
 {% endfor %}
 
@@ -33,6 +40,6 @@
     {% endfor %}
 
 </ul>
-
+</div>
 </body>
 </html>
