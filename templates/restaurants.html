@@ -34,12 +34,18 @@
 <h2>Wszystkie knajpy</h2>
 
 
-<ul>
+<table class="table">
+    <tr><th>Miejsce</th><th>Nazwa</th><th>Punktacja</th><th>Ilość ocen</th></tr>
     {% for restaurant in restaurants %}
-        <li>[{{ restaurant['average'] }}] ({{ restaurant['votes'] }}) {{ restaurant['name'] }}</li>
+        <tr>
+            <th>{{ loop.index }}</th>
+            <th>{{ restaurant['name'] }}</th>
+            <td>{{ restaurant['average'] }}</td>
+            <td>({{ restaurant['votes'] }})<td>
+        </tr>
     {% endfor %}
 
-</ul>
+</table>
 </div>
 </body>
 </html>
