@@ -93,8 +93,9 @@
     })
     document.querySelectorAll('tr').forEach(i => {
         i.addEventListener("drop", function (e) {
-            e.currentTarget.parentNode.insertBefore(selectedRestaurant, e.currentTarget.nextSibling);
-            fetch(base_url + "/change_ranking")
+            let nextSibling = e.currentTarget.nextSibling;
+            e.currentTarget.parentNode.insertBefore(selectedRestaurant, nextSibling);
+            fetch(base_url + `/change_ranking?moved_item=${selectedRestaurant.children[0].innerText}&moved_before=${nextSibling.nextSibling.children[0].innerText}`)
         });
     })
 
