@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous" defer></script>
+    <title>Centrum Informacji Gastronomicznej</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            margin-top: 10px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Centrum Informacji Gastronomicznej</h1>
+<h2>Rankingi</h2>
+
+{% for ranking in rankings %}
+    <h3>{{ ranking['name'] }}</h3>
+    <table class="table">
+        <tr><th>Miejsce</th><th>Nazwa</th><th>Punktacja</th></tr>
+        {% for restaurant in ranking.restaurants %}
+            <tr><td>{{loop.index}}</td><th>{{ restaurant['name'] }}</th><td>{{ restaurant['place'] }}</td></tr>
+        {% endfor %}
+    </table>
+
+{% endfor %}
+
+<h2>Wszystkie knajpy</h2>
+
+
+<table class="table">
+    <tr><th>Miejsce</th><th>Nazwa</th><th>Punktacja</th><th>Ilość ocen</th></tr>
+    {% for restaurant in restaurants %}
+        <tr>
+            <th>{{ loop.index }}</th>
+            <th>{{ restaurant['name'] }}</th>
+            <td>{{ restaurant['average'] }}</td>
+            <td>({{ restaurant['votes'] }})<td>
+        </tr>
+    {% endfor %}
+
+
+
+</table>
+</div>
+
+</body>
+</html>

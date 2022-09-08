@@ -9,6 +9,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
+    rankings, restaurants = get_rankings()
+    return render_template("restaurants.html", restaurants=restaurants, rankings=rankings)
+
+
+def get_rankings():
     restaurants = execute_select("select * from restaurants")
     rankings = execute_select("select * from rankings")
     for ranking in rankings:
@@ -33,9 +38,14 @@ def hello_world():
         else:
             restaurant['average'] = "--"
             restaurant['votes'] = 0
-    restaurants.sort(key= lambda x: x['average'], reverse=True)
-    return render_template("restaurants.html", restaurants=restaurants, rankings=rankings)
+    restaurants.sort(key=lambda x: x['average'], reverse=True)
+    return rankings, restaurants
 
+
+@app.route('/edit')
+def edit():
+    rankings, restaurants = get_rankings()
+    return render_template("edit.html", restaurants=restaurants, rankings=rankings)
 
 def execute_select(statement, variables=None, fetchall=True):
     result_set = []
