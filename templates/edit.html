@@ -33,38 +33,74 @@
 </head>
 <body>
 <div class="container">
-<h1>Centrum Informacji Gastronomicznej</h1>
-<h2>Rankingi</h2>
+    <h1>Centrum Informacji Gastronomicznej</h1>
+    <h2>Rankingi</h2>
 
-{% for ranking in rankings %}
-    <h3>{{ ranking['name'] }}</h3>
-    <table class="table">
-        <tr><th>Miejsce</th><th>Nazwa</th><th>Punktacja</th></tr>
-        {% for restaurant in ranking.restaurants %}
-            <tr><td>{{loop.index}}</td><th>{{ restaurant['name'] }}</th><td>{{ restaurant['place'] }}</td></tr>
-        {% endfor %}
-    </table>
+    {% for ranking in rankings %}
+        <h3>{{ ranking['name'] }}</h3>
+        <table class="table">
+            <tr>
+                <th>Miejsce</th>
+                <th>Nazwa</th>
+                <th>Punktacja</th>
+            </tr>
+            {% for restaurant in ranking.restaurants %}
+                <tr draggable="true">
+                    <td>{{ loop.index }}</td>
+                    <th>{{ restaurant['name'] }}</th>
+                    <td>{{ restaurant['place'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
 
-{% endfor %}
-
-<h2>Wszystkie knajpy</h2>
-
-
-<table class="table">
-    <tr><th>Miejsce</th><th>Nazwa</th><th>Punktacja</th><th>Ilość ocen</th></tr>
-    {% for restaurant in restaurants %}
-        <tr>
-            <th>{{ loop.index }}</th>
-            <th>{{ restaurant['name'] }}</th>
-            <td>{{ restaurant['average'] }}</td>
-            <td>({{ restaurant['votes'] }})<td>
-        </tr>
     {% endfor %}
 
+    <h2>Wszystkie knajpy</h2>
 
 
-</table>
+    <table class="table">
+        <tr>
+            <th>Miejsce</th>
+            <th>Nazwa</th>
+            <th>Punktacja</th>
+            <th>Ilość ocen</th>
+        </tr>
+        {% for restaurant in restaurants %}
+            <tr draggable="true">
+                <th>{{ loop.index }}</th>
+                <th>{{ restaurant['name'] }}</th>
+                <td>{{ restaurant['average'] }}</td>
+                <td>({{ restaurant['votes'] }})
+                <td>
+            </tr>
+        {% endfor %}
+
+
+    </table>
 </div>
 
+<script>
+
+    let selectedRestaurant;
+
+    document.querySelectorAll('tr').forEach(i => {
+        i.addEventListener("dragstart", function (e) {
+            selectedRestaurant = e.currentTarget;
+        });
+
+    })
+    document.querySelectorAll('tr').forEach(i => {
+        i.addEventListener("drop", function (e) {
+            e.currentTarget.parentNode.insertBefore(selectedRestaurant, e.currentTarget.nextSibling);
+        });
+    })
+
+    document.querySelectorAll('tr').forEach(i => {
+        i.addEventListener("dragover", function (e) {
+            e.preventDefault()
+        });
+    })
+
+</script>
 </body>
 </html>
