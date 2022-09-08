@@ -82,6 +82,8 @@
 <script>
 
     let selectedRestaurant;
+    const base_url = window.location.origin;
+    console.log(base_url);
 
     document.querySelectorAll('tr').forEach(i => {
         i.addEventListener("dragstart", function (e) {
@@ -92,6 +94,7 @@
     document.querySelectorAll('tr').forEach(i => {
         i.addEventListener("drop", function (e) {
             e.currentTarget.parentNode.insertBefore(selectedRestaurant, e.currentTarget.nextSibling);
+            fetch(base_url + "/change_ranking")
         });
     })
 

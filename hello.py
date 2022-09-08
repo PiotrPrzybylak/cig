@@ -47,6 +47,11 @@ def edit():
     rankings, restaurants = get_rankings()
     return render_template("edit.html", restaurants=restaurants, rankings=rankings)
 
+@app.route('/change_ranking')
+def change_ranking():
+    print("ranking changed!")
+    return "ok"
+
 def execute_select(statement, variables=None, fetchall=True):
     result_set = []
     with psycopg2.connect(connection_string) as conn:
