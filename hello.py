@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, session, redirect, url_for, escape, request, make_response, render_template
 import os
 import psycopg2
 import psycopg2.extras
 
 connection_string = os.environ.get('DATABASE_URL')
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 
 @app.route("/")
@@ -47,10 +48,27 @@ def edit():
     rankings, restaurants = get_rankings()
     return render_template("edit.html", restaurants=restaurants, rankings=rankings)
 
+
 @app.route('/change_ranking')
 def change_ranking():
     print("ranking changed!")
     return "ok"
+
+
+@app.route('/login')
+def login_form():
+    return render_template('login.html', message=request.args.get("message"))
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.form['email'] == "admin@o2.pl" and \
+            request.form['password'] == "admin":
+        session['email'] = request.form['email']
+        return redirect(url_for('hello_world'))
+    else:
+        return redirect(url_for('login_form', message="Wrong credentials"))
+
 
 def execute_select(statement, variables=None, fetchall=True):
     result_set = []
