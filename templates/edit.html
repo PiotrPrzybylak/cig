@@ -36,6 +36,8 @@
     <h1>Centrum Informacji Gastronomicznej</h1>
     <h2>Rankingi</h2>
 
+Użytkownik: {{ session['email'] }}
+
     {% for ranking in rankings %}
         <h3>{{ ranking['name'] }}</h3>
         <table class="table">
