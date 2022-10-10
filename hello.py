@@ -62,8 +62,8 @@ def login_form():
 
 @app.route('/login', methods=['POST'])
 def login():
-    if request.form['email'] == "admin@o2.pl" and \
-            request.form['password'] == "admin":
+    user = execute_select("select * from users where email = %s", (request.form['email'],), False)
+    if user and request.form['password'] == user["password"]:
         session['email'] = request.form['email']
         return redirect(url_for('hello_world'))
     else:

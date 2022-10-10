@@ -12,3 +12,12 @@ create table if not exists rankings
     name            text,
     restaurants_ids text
 );
+
+create table users
+(
+    id       serial
+        constraint users_pk
+            primary key,
+    email    text,
+    password text
+);
